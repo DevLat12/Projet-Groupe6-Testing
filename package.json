@@ -1,0 +1,29 @@
+{
+  "name": "propelize-vehicle-api",
+  "version": "1.0.0",
+  "description": "API de gestion des véhicules avec Node.js, Express et MySQL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "vitest"
+  },
+  "author": "Propelize Dev Team",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.1",
+    "os": "^0.1.2",
+    "selfsigned": "^2.4.1",
+    "sequelize": "^6.32.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3",
+    "vitest": "^3.1.4"
+  }
+}
