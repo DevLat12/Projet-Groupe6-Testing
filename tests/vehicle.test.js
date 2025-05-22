@@ -13,6 +13,7 @@ beforeAll(async () => {
 // Groupe de tests nommé "Vehicle API"
 describe('Vehicle API', () => {
 
+  const vehiculeId = null;
   // Test 1 : Vérifie que l'on peut lister les véhicules
   it('Liste les véhicules', async () => {
     // On envoie une requête GET à /vehicles
@@ -23,6 +24,16 @@ describe('Vehicle API', () => {
 
     // On vérifie que la réponse est bien un tableau (liste de véhicules)
     expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it('Modifie un véhicule', async () => {
+    const res = await request(app).put(`/vehicles/${vehiculeId}`).send({
+      marque: "Nissan",
+      modele: "Qashqai",
+      rentalPrice: 65.0
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("Mis à jour avec succès");
   });
 
 });
