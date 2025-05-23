@@ -32,6 +32,42 @@ router.get('/', controller.getAllVehicles);
 
 /**
  * @swagger
+ * /vehicles/{id}:
+ *   put:
+ *     summary: Update a vehicle by ID
+ *     tags: [Vehicle]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               mark:
+ *                 type: string
+ *               modele:
+ *                 type: string
+ *               annee:
+ *                 type: integer
+ *               rentalPrice:
+ *                 type: number
+ *               registrationNumber:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Updated
+ */
+router.put('/:id', controller.updateVehicleById);
+
+
+/**
+ * @swagger
  * /vehicles/search/{registrationNumber}:
  *   get:
  *     summary: Search vehicle by registration number

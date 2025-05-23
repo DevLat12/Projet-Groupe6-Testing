@@ -12,4 +12,10 @@ exports.searchByRegistration = async (req, res) => {
 
   if (!vehicle) return res.status(404).json({ message: "Véhicule non trouvé" });
   res.json(vehicle);
+}
+
+exports.updateVehicleById = async (req, res) => {
+  const [updated] = await Vehicle.update(req.body, { where: { id: req.params.id } });
+  if (!updated) return res.status(404).json({ message: "Non trouvé" });
+  res.json({ message: "Mis à jour avec succès" });
 };
