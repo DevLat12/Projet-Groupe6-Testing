@@ -8,8 +8,8 @@ services:
     environment:
       - DB_NAME=propelize
       - DB_USER=root
-      - DB_PASS=root
-      - DB_HOST=db
+      - DB_PASS=
+      - DB_HOST=locahost
     depends_on:
       - db
 

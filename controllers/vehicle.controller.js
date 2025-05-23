@@ -9,9 +9,15 @@ exports.getAllVehicles = async (req, res) => {
 exports.searchByRegistration = async (req, res) => {
   const { registrationNumber } = req.params;
   const vehicle = await Vehicle.findOne({ where: { registrationNumber } });
-
   if (!vehicle) return res.status(404).json({ message: "Véhicule non trouvé" });
   res.json(vehicle);
+};
+
+exports.deleteVehicle = async (req, res) => {
+  const deleted = await Vehicle.destroy({ where: { id: req.params.id } });
+  if (!deleted) return res.status(404).json({ message: "Non trouvé" });
+  res.json({ message: "Supprimé avec succès" });
+
 }
 
 exports.updateVehicleById = async (req, res) => {
