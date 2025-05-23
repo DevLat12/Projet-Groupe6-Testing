@@ -30,5 +30,8 @@ exports.getVehiclesByMaxPrice = async (req, res) => {
   const vehicles = await Vehicle.findAll({
     where: { rentalPrice: { [require('sequelize').Op.lte]: parseFloat(maxPrice) } }
   });
+  if(vehicles.length <= 0)
+    res.json({message: "Aucun vehicule trouve"})
+  else
   res.json(vehicles);
 };
