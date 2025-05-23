@@ -28,6 +28,13 @@ describe('Vehicle API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
+it('Filtre par prix de location maximum', async () => {
+    const res = await request(app).get('/vehicles/price/70');
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].rentalPrice).toBeLessThanOrEqual(70);
+  }); 
+  
   it('Recherche par numéro d\'immatriculation', async () => {
     const res = await request(app).get('/vehicle/search/TEST123');
     expect(res.statusCode).toBe(200);
@@ -35,6 +42,7 @@ describe('Vehicle API', () => {
   });
 
 
+  
 
   it('Modifie un véhicule', async () => {
     const res = await request(app).put(`/vehicles/${vehiculeId}`).send({

@@ -29,6 +29,7 @@ const controller = require('../controllers/vehicle.controller');
  */
 router.get('/', controller.getAllVehicles);
 
+<<<<<<< HEAD
 
 /**
  * @swagger
@@ -103,5 +104,24 @@ router.get('/search/:registrationNumber', controller.searchByRegistration);
  *         description: Deleted
  */
 router.delete('/:id', controller.deleteVehicle);
+=======
+/**
+ * @swagger
+ * /vehicles/price/{maxPrice}:
+ *   get:
+ *     summary: Get all vehicles with rentalPrice <= maxPrice
+ *     tags: [Vehicle]
+ *     parameters:
+ *       - in: path
+ *         name: maxPrice
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: List of filtered vehicles
+ */
+router.get('/price/:maxPrice', controller.getVehiclesByMaxPrice);
+>>>>>>> origin/searchByMaxPrice
 
  module.exports = router;
