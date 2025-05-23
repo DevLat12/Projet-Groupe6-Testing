@@ -25,4 +25,10 @@ describe('Vehicle API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
+    it('Recherche par numéro d\'immatriculation', async () => {
+    const res = await request(app).get('/vehicle/search/TEST123');
+    expect(res.statusCode).toBe(200);
+    expect(res.body.registrationNumber).toBe("TEST123");
+  });
+
 });
