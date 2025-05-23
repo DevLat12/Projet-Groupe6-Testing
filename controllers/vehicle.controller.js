@@ -6,4 +6,9 @@ exports.getAllVehicles = async (req, res) => {
   res.json(vehicles);
 };
 
+exports.deleteVehicle = async (req, res) => {
+  const deleted = await Vehicle.destroy({ where: { id: req.params.id } });
+  if (!deleted) return res.status(404).json({ message: "Non trouvé" });
+  res.json({ message: "Supprimé avec succès" });
+};
 

@@ -31,4 +31,22 @@ router.get('/', controller.getAllVehicles);
 
 
 
+/**
+ * @swagger
+ * /vehicles/{id}:
+ *   delete:
+ *     summary: Delete a vehicle by ID
+ *     tags: [Vehicle]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Deleted
+ */
+router.delete('/:id', controller.deleteVehicle);
+
  module.exports = router;

@@ -27,6 +27,10 @@ describe('Vehicle API', () => {
   });
 
 
-
+  it('Supprime un véhicule', async () => {
+    const res = await request(app).delete(`/vehicles/${vehicleId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("Supprimé avec succès");
+  });
 
 });
