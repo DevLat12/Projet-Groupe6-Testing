@@ -41,6 +41,11 @@ it('Filtre par prix de location maximum', async () => {
     expect(res.body.registrationNumber).toBe("TEST123");
   });
 
+    it('Récupère un véhicule par ID', async () => {
+    const res = await request(app).get(`/vehicles/${vehicleId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.id).toBe(vehicleId);
+  });
 
   
 
