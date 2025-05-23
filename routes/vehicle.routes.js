@@ -29,6 +29,22 @@ const controller = require('../controllers/vehicle.controller');
  */
 router.get('/', controller.getAllVehicles);
 
-
+/**
+ * @swagger
+ * /vehicles/{id}:
+ *   get:
+ *     summary: Get a vehicle by ID
+ *     tags: [Vehicle]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Vehicle data
+ */
+router.get('/:id', controller.getVehicleById);
 
  module.exports = router;
