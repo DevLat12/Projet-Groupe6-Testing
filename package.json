@@ -8,6 +8,7 @@
     "dev": "nodemon app.js",
     "test": "vitest"
   },
+
   "author": "Propelize Dev Team",
   "license": "MIT",
   "dependencies": {

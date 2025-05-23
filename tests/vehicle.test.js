@@ -13,7 +13,8 @@ beforeAll(async () => {
 // Groupe de tests nommé "Vehicle API"
 describe('Vehicle API', () => {
 
-  const vehiculeId = null;
+  const vehiculeId = 1;
+  console.log(vehiculeId);
   // Test 1 : Vérifie que l'on peut lister les véhicules
   it('Liste les véhicules', async () => {
     // On envoie une requête GET à /vehicles
@@ -28,8 +29,8 @@ describe('Vehicle API', () => {
 
   it('Modifie un véhicule', async () => {
     const res = await request(app).put(`/vehicles/${vehiculeId}`).send({
-      marque: "Nissan",
-      modele: "Qashqai",
+      mark: "BMWX",
+      modele: "Toyota",
       rentalPrice: 65.0
     });
     expect(res.statusCode).toBe(200);
