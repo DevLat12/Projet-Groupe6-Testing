@@ -26,7 +26,12 @@ describe('Vehicle API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-
+it('Filtre par prix de location maximum', async () => {
+    const res = await request(app).get('/vehicles/price/70');
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].rentalPrice).toBeLessThanOrEqual(70);
+  });
 
 
 });
