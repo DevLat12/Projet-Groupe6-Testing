@@ -6,7 +6,6 @@ exports.getAllVehicles = async (req, res) => {
   res.json(vehicles);
 };
 
-<<<<<<< HEAD
 exports.searchByRegistration = async (req, res) => {
   const { registrationNumber } = req.params;
   const vehicle = await Vehicle.findOne({ where: { registrationNumber } });
@@ -26,7 +25,6 @@ exports.updateVehicleById = async (req, res) => {
   if (!updated) return res.status(404).json({ message: "Non trouvé" });
   res.json({ message: "Mis à jour avec succès" });
 };
-=======
 exports.getVehiclesByMaxPrice = async (req, res) => {
   const { maxPrice } = req.params;
   const vehicles = await Vehicle.findAll({
@@ -34,4 +32,3 @@ exports.getVehiclesByMaxPrice = async (req, res) => {
   });
   res.json(vehicles);
 };
->>>>>>> origin/searchByMaxPrice
