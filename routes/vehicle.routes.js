@@ -44,18 +44,17 @@ router.get('/', controller.getAllVehicles);
  *           schema:
  *             type: object
  *             required:
- *               - marque
- *               - modele
+ *               - mark
+ *               -modele
+ *               - registrationNumber
  *               - rentalPrice
  *             properties:
- *               marque:
- *                 type: string
  *               modele:
+ *                 type: string
+ *               mark:
  *                 type: string
  *               annee:
  *                 type: integer
- *               disponible:
- *                 type: boolean
  *               rentalPrice:
  *                 type: number
  *               registrationNumber:
