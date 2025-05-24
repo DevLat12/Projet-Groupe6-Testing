@@ -6,6 +6,15 @@ exports.getAllVehicles = async (req, res) => {
   res.json(vehicles);
 };
 
+exports.createVehicle = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.create(req.body);
+    res.status(201).json(vehicle);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 exports.searchByRegistration = async (req, res) => {
   const { registrationNumber } = req.params;
   const vehicle = await Vehicle.findOne({ where: { registrationNumber } });

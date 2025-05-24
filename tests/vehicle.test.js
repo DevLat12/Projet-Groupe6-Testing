@@ -10,6 +10,8 @@ beforeAll(async () => {
   await sequelize.sync({ force: false });
 });
 
+
+
 // Groupe de tests nommé "Vehicle API"
 describe('Vehicle API', () => {
   let vehicleId = null;
@@ -28,7 +30,23 @@ describe('Vehicle API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-it('Filtre par prix de location maximum', async () => {
+
+
+  it('Ajoute un véhicule', async () => {
+    // On envoie une requête POST à /vehicles avec un corps JSON contenant les infos du véhicule
+    const res = await request(app).post('/vehicles').send({
+      marque: "Nissan", modele: "Juke", annee: 2020, rentalPrice: 60.00
+    });
+
+    // On s'attend à ce que la réponse HTTP ait le statut 201 (créé)
+    expect(res.statusCode).toBe(201);
+
+    // On vérifie que la réponse contient bien la marque "Nissan"
+    expect(res.body.marque).toBe("Nissan");
+  });
+
+
+  it('Filtre par prix de location maximum', async () => {
     const res = await request(app).get('/vehicles/price/70');
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);
@@ -64,5 +82,6 @@ it('Filtre par prix de location maximum', async () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Supprimé avec succès");
   });
+
 
 });

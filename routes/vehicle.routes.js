@@ -30,6 +30,42 @@ const controller = require('../controllers/vehicle.controller');
 router.get('/', controller.getAllVehicles);
 
 
+
+/**
+ * @swagger
+ * /vehicles:
+ *   post:
+ *     summary: Create a new vehicle
+ *     tags: [Vehicle]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - marque
+ *               - modele
+ *               - rentalPrice
+ *             properties:
+ *               marque:
+ *                 type: string
+ *               modele:
+ *                 type: string
+ *               annee:
+ *                 type: integer
+ *               disponible:
+ *                 type: boolean
+ *               rentalPrice:
+ *                 type: number
+ *               registrationNumber:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+router.post('/', controller.createVehicle);
+
 /**
  * @swagger
  * /vehicles/{id}:
