@@ -45,7 +45,7 @@ router.get('/', controller.getAllVehicles);
  *             type: object
  *             required:
  *               - mark
- *               -modele
+ *               - modele
  *               - registrationNumber
  *               - rentalPrice
  *             properties:
