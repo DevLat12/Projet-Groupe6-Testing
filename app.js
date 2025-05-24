@@ -41,6 +41,7 @@ const express = require('express');
 const https = require('https');
 const fs = require('fs');
 const vehicleRoutes = require('./routes/vehicle.routes');
+const AuthRoutes = require('./routes/auth.route');
 const sequelize = require('./config/database');
 const { swaggerUi, specs, ip } = require('./swagger');
 const generateSSL = require('./utils/generateSSL');
@@ -53,6 +54,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes de l’API
 app.use('/vehicles', vehicleRoutes);
+app.use('/auth', AuthRoutes);
 
 // Connexion à la base
 sequelize.authenticate()

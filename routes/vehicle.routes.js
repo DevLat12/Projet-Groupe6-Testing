@@ -16,6 +16,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/vehicle.controller');
+const authenticateToken = require('../middlewares/auth.middleware'); // Importer le middleware
 
 /**
  * @swagger
@@ -30,13 +31,14 @@ const controller = require('../controllers/vehicle.controller');
 router.get('/', controller.getAllVehicles);
 
 
-
 /**
  * @swagger
  * /vehicles:
  *   post:
  *     summary: Create a new vehicle
  *     tags: [Vehicle]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -45,7 +47,7 @@ router.get('/', controller.getAllVehicles);
  *             type: object
  *             required:
  *               - mark
- *               -modele
+ *               - modele
  *               - registrationNumber
  *               - rentalPrice
  *             properties:
@@ -62,8 +64,12 @@ router.get('/', controller.getAllVehicles);
  *     responses:
  *       201:
  *         description: Created
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       403:
+ *         description: Forbidden - Invalid token
  */
-router.post('/', controller.createVehicle);
+router.post('/', authenticateToken, controller.createVehicle);
 
 /**
  * @swagger
@@ -120,13 +126,14 @@ router.put('/:id', controller.updateVehicleById);
 router.get('/search/:registrationNumber', controller.searchByRegistration);
 
 
-
 /**
  * @swagger
  * /vehicles/{id}:
  *   delete:
  *     summary: Delete a vehicle by ID
  *     tags: [Vehicle]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -136,8 +143,12 @@ router.get('/search/:registrationNumber', controller.searchByRegistration);
  *     responses:
  *       200:
  *         description: Deleted
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       403:
+ *         description: Forbidden - Invalid token
  */
-router.delete('/:id', controller.deleteVehicle);
+router.delete('/:id', authenticateToken,controller.deleteVehicle);
 /**
  * @swagger
  * /vehicles/price/{maxPrice}:
@@ -177,4 +188,4 @@ router.get('/price/:maxPrice', controller.getVehiclesByMaxPrice);
  */
 router.get('/:id', controller.getVehicleById);
 
- module.exports = router;
+module.exports = router;

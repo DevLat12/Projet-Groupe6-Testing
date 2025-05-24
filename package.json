@@ -8,16 +8,19 @@
     "dev": "nodemon app.js",
     "test": "vitest"
   },
-
   "author": "Propelize Dev Team",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.3",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.5.0",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.1",
     "os": "^0.1.2",
     "selfsigned": "^2.4.1",
     "sequelize": "^6.32.1",
+    "sequelize-cli": "^6.6.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },

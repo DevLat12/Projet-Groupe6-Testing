@@ -18,7 +18,16 @@ const options = {
         url: `https://${ip}:3000`,
         description: "Serveur dynamique basé sur l'adresse IP locale"
       }
-    ]
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
+    }
   },
   apis: ["./routes/*.js"], // Documentation via JSDoc dans les routes
 };
