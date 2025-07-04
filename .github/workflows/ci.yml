@@ -1,0 +1,29 @@
+name: CI Propelize Front
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci || npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Lint (optionnel)
+        run: echo "Pas de lint spécifique pour HTML statique"
+      - name: Run Playwright tests
+        run: npx playwright test tests/*.spec.js

@@ -80,8 +80,6 @@
       <thead>
         <tr>
           <th>Nom</th>
-          <th>Email</th>
-          <th>Rôle</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -106,15 +104,8 @@
               <input type="text" class="form-control" id="userName" required>
             </div>
             <div class="mb-3">
-              <label for="userEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="userEmail" required>
-            </div>
-            <div class="mb-3">
-              <label for="userRole" class="form-label">Rôle</label>
-              <select class="form-select" id="userRole" required>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
+              <label for="userPassword" class="form-label">Mot de passe</label>
+              <input type="password" class="form-control" id="userPassword" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -142,15 +133,9 @@
               <input type="text" class="form-control" id="editUserName" required>
             </div>
             <div class="mb-3">
-              <label for="editUserEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="editUserEmail" required>
-            </div>
-            <div class="mb-3">
-              <label for="editUserRole" class="form-label">Rôle</label>
-              <select class="form-select" id="editUserRole" required>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
+              <label for="editUserPassword" class="form-label">Nouveau mot de passe</label>
+              <input type="password" class="form-control" id="editUserPassword">
+              <small class="form-text text-muted">Laisse vide pour ne pas changer.</small>
             </div>
           </div>
           <div class="modal-footer">
@@ -177,10 +162,8 @@
           tbody.append(`
             <tr>
               <td>${user.name}</td>
-              <td>${user.email}</td>
-              <td>${user.role}</td>
               <td>
-                <button class="btn btn-sm btn-warning me-1" onclick="showEditUser(${user.id}, '${user.name}', '${user.email}', '${user.role}')">Modifier</button>
+                <button class="btn btn-sm btn-warning me-1" onclick="showEditUser(${user.id}, '${user.name}')">Modifier</button>
                 <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">Supprimer</button>
               </td>
             </tr>
@@ -194,9 +177,9 @@
       e.preventDefault();
       const user = {
         name: $('#userName').val(),
-        email: $('#userEmail').val(),
-        role: $('#userRole').val()
+        password: $('#userPassword').val()
       };
+      // $.post(API_BASE, user, ...)
       $.post(API_BASE, user, function () {
         $('#addUserModal').modal('hide');
         loadUsers();
@@ -204,11 +187,10 @@
     });
 
     // Pré-remplir le modal d'édition
-    window.showEditUser = function (id, name, email, role) {
+    window.showEditUser = function (id, name) {
       $('#editUserId').val(id);
       $('#editUserName').val(name);
-      $('#editUserEmail').val(email);
-      $('#editUserRole').val(role);
+      $('#editUserPassword').val('');
       const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
       modal.show();
     }
@@ -218,10 +200,11 @@
       e.preventDefault();
       const id = $('#editUserId').val();
       const user = {
-        name: $('#editUserName').val(),
-        email: $('#editUserEmail').val(),
-        role: $('#editUserRole').val()
+        name: $('#editUserName').val()
       };
+      const password = $('#editUserPassword').val();
+      if (password) user.password = password;
+      // $.ajax({ ... })
       $.ajax({
         url: API_BASE + '/' + id,
         type: 'PUT',

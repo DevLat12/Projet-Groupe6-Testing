@@ -40,6 +40,7 @@
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
+const path = require('path');
 const vehicleRoutes = require('./routes/vehicle.routes');
 const AuthRoutes = require('./routes/auth.route');
 const sequelize = require('./config/database');
@@ -49,12 +50,23 @@ const generateSSL = require('./utils/generateSSL');
 const app = express();
 app.use(express.json());
 
+// Pour parser les POST JSON/formulaires
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// Servir le frontend statique (chemin relatif depuis backend)
+app.use(express.static(path.join(__dirname, '../frontend/src')));
+
 // Point d’entrée Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes de l’API
 app.use('/vehicles', vehicleRoutes);
 app.use('/auth', AuthRoutes);
+
+const cors = require('cors');
+app.use(cors());
 
 // Connexion à la base
 sequelize.authenticate()

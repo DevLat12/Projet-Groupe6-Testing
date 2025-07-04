@@ -1,23 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Véhicules - Propelize</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { background: linear-gradient(135deg, #283593 0%, #00bcd4 100%); min-height: 100vh; }
-    .container-bg { background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(40,53,147,0.2); padding: 2rem; margin-top: 40px; }
-    .brand { color: #00bcd4; font-weight: bold; font-size: 2rem; margin-bottom: 1.5rem; text-align: center; }
-    .table thead { background: #283593; color: #fff; }
-    .btn-primary { background: #00bcd4; border: none; }
-    .btn-primary:hover { background: #283593; }
-    .navbar { background: #283593; }
-    .navbar-brand { color: #fff !important; }
-    .nav-link { color: #fff !important; }
-    .nav-link.active, .nav-link:hover { color: #00bcd4 !important; font-weight: bold; }
+    body {
+      background: linear-gradient(135deg, #283593 0%, #00bcd4 100%);
+      min-height: 100vh;
+    }
+
+    .container-bg {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(40, 53, 147, 0.2);
+      padding: 2rem;
+      margin-top: 40px;
+    }
+
+    .brand {
+      color: #00bcd4;
+      font-weight: bold;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .table thead {
+      background: #283593;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: #00bcd4;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #283593;
+    }
+
+    .navbar {
+      background: #283593;
+    }
+
+    .navbar-brand {
+      color: #fff !important;
+    }
+
+    .nav-link {
+      color: #fff !important;
+    }
+
+    .nav-link.active,
+    .nav-link:hover {
+      color: #00bcd4 !important;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -34,14 +78,17 @@
   <div class="container container-bg">
     <div class="brand">Tableau de bord des véhicules</div>
     <div class="mb-3 text-end">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule
+      </button>
     </div>
     <table class="table table-hover align-middle" id="vehiclesTable">
       <thead>
         <tr>
-          <th>Nom</th>
+          <th>Immatriculation</th>
           <th>Marque</th>
-          <th>Statut</th>
+          <th>Modèle</th>
+          <th>Année</th>
+          <th>Prix de location (FCFA)</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -62,20 +109,24 @@
         <form id="addVehicleForm">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="vehicleName" class="form-label">Nom du véhicule</label>
-              <input type="text" class="form-control" id="vehicleName" required>
+              <label for="vehicleRegistration" class="form-label">Immatriculation</label>
+              <input type="text" class="form-control" id="vehicleRegistration" required>
             </div>
             <div class="mb-3">
-              <label for="vehicleBrand" class="form-label">Marque</label>
-              <input type="text" class="form-control" id="vehicleBrand" required>
+              <label for="vehicleMark" class="form-label">Marque</label>
+              <input type="text" class="form-control" id="vehicleMark" required>
             </div>
             <div class="mb-3">
-              <label for="vehicleStatus" class="form-label">Statut</label>
-              <select class="form-select" id="vehicleStatus" required>
-                <option value="Disponible">Disponible</option>
-                <option value="En maintenance">En maintenance</option>
-                <option value="Indisponible">Indisponible</option>
-              </select>
+              <label for="vehicleModel" class="form-label">Modèle</label>
+              <input type="text" class="form-control" id="vehicleModel" required>
+            </div>
+            <div class="mb-3">
+              <label for="vehicleYear" class="form-label">Année</label>
+              <input type="number" class="form-control" id="vehicleYear" min="1900" max="2100">
+            </div>
+            <div class="mb-3">
+              <label for="vehiclePrice" class="form-label">Prix de location (€)</label>
+              <input type="number" class="form-control" id="vehiclePrice" step="0.01" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -88,7 +139,8 @@
   </div>
 
   <!-- Modal d'édition -->
-  <div class="modal fade" id="editVehicleModal" tabindex="-1" aria-labelledby="editVehicleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editVehicleModal" tabindex="-1" aria-labelledby="editVehicleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -99,20 +151,24 @@
           <div class="modal-body">
             <input type="hidden" id="editVehicleId">
             <div class="mb-3">
-              <label for="editVehicleName" class="form-label">Nom du véhicule</label>
-              <input type="text" class="form-control" id="editVehicleName" required>
+              <label for="editVehicleRegistration" class="form-label">Immatriculation</label>
+              <input type="text" class="form-control" id="editVehicleRegistration" required>
             </div>
             <div class="mb-3">
-              <label for="editVehicleBrand" class="form-label">Marque</label>
-              <input type="text" class="form-control" id="editVehicleBrand" required>
+              <label for="editVehicleMark" class="form-label">Marque</label>
+              <input type="text" class="form-control" id="editVehicleMark" required>
             </div>
             <div class="mb-3">
-              <label for="editVehicleStatus" class="form-label">Statut</label>
-              <select class="form-select" id="editVehicleStatus" required>
-                <option value="Disponible">Disponible</option>
-                <option value="En maintenance">En maintenance</option>
-                <option value="Indisponible">Indisponible</option>
-              </select>
+              <label for="editVehicleModel" class="form-label">Modèle</label>
+              <input type="text" class="form-control" id="editVehicleModel" required>
+            </div>
+            <div class="mb-3">
+              <label for="editVehicleYear" class="form-label">Année</label>
+              <input type="number" class="form-control" id="editVehicleYear" min="1900" max="2100">
+            </div>
+            <div class="mb-3">
+              <label for="editVehiclePrice" class="form-label">Prix de location (FCFA)</label>
+              <input type="number" class="form-control" id="editVehiclePrice" step="0.01" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -128,21 +184,23 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Remplacer l'URL par celle de ton API backend pour chaque opération CRUD
-    const API_BASE = '/api/vehicles'; // <-- À adapter
+    const API_BASE = '/vehicles'; // <-- À adapter
 
     // Charger la liste des véhicules
     function loadVehicles() {
-      $.get(API_BASE, function(data) {
+      $.get(API_BASE, function (data) {
         const tbody = $('#vehiclesTable tbody');
         tbody.empty();
         data.forEach(vehicle => {
           tbody.append(`
             <tr>
-              <td>${vehicle.name}</td>
-              <td>${vehicle.brand}</td>
-              <td><span class="badge ${getStatusClass(vehicle.status)}">${vehicle.status}</span></td>
+              <td>${vehicle.registrationNumber}</td>
+              <td>${vehicle.mark}</td>
+              <td>${vehicle.modele}</td>
+              <td>${vehicle.annee || ''}</td>
+              <td>${vehicle.rentalPrice.toFixed(2)}</td>
               <td>
-                <button class="btn btn-sm btn-warning me-1" onclick="showEditVehicle(${vehicle.id}, '${vehicle.name}', '${vehicle.brand}', '${vehicle.status}')">Modifier</button>
+                <button class="btn btn-sm btn-warning me-1" onclick="showEditVehicle(${vehicle.id}, '${vehicle.registrationNumber}', '${vehicle.mark}', '${vehicle.modele}', '${vehicle.annee}', '${vehicle.rentalPrice}')">Modifier</button>
                 <button class="btn btn-sm btn-danger" onclick="deleteVehicle(${vehicle.id})">Supprimer</button>
               </td>
             </tr>
@@ -152,52 +210,77 @@
     }
 
     function getStatusClass(status) {
-      switch(status) {
-        case 'Disponible': return 'bg-success';
-        case 'En maintenance': return 'bg-warning text-dark';
-        case 'Indisponible': return 'bg-danger';
-        default: return 'bg-secondary';
+      switch (status) {
+        case 'Disponible':
+          return 'bg-success';
+        case 'En maintenance':
+          return 'bg-warning text-dark';
+        case 'Indisponible':
+          return 'bg-danger';
+        default:
+          return 'bg-secondary';
       }
     }
 
     // Ajouter un véhicule
-    $('#addVehicleForm').submit(function(e) {
+    $('#addVehicleForm').submit(function (e) {
       e.preventDefault();
       const vehicle = {
-        name: $('#vehicleName').val(),
-        brand: $('#vehicleBrand').val(),
-        status: $('#vehicleStatus').val()
+        registrationNumber: $('#vehicleRegistration').val(),
+        mark: $('#vehicleMark').val(),
+        modele: $('#vehicleModel').val(),
+        annee: $('#vehicleYear').val(),
+        rentalPrice: $('#vehiclePrice').val()
       };
-      $.post(API_BASE, vehicle, function() {
-        $('#addVehicleModal').modal('hide');
-        loadVehicles();
+      $.ajax({
+        url: API_BASE,
+        type: 'POST',
+        data: vehicle,
+        headers: {
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('tokens')).accessToken
+        },
+        success: function () {
+          $('#addVehicleModal').modal('hide');
+          loadVehicles();
+        },
+        error: function (xhr) {
+          alert('Erreur lors de l\'ajout : ' + xhr.statusText);
+        }
       });
     });
 
     // Pré-remplir le modal d'édition
-    window.showEditVehicle = function(id, name, brand, status) {
+    window.showEditVehicle = function (id, registrationNumber, mark, modele, annee, rentalPrice) {
       $('#editVehicleId').val(id);
-      $('#editVehicleName').val(name);
-      $('#editVehicleBrand').val(brand);
-      $('#editVehicleStatus').val(status);
+      $('#editVehicleRegistration').val(registrationNumber);
+      $('#editVehicleMark').val(mark);
+      $('#editVehicleModel').val(modele);
+      $('#editVehicleYear').val(annee);
+      $('#editVehiclePrice').val(rentalPrice);
       const modal = new bootstrap.Modal(document.getElementById('editVehicleModal'));
       modal.show();
     }
 
     // Modifier un véhicule
-    $('#editVehicleForm').submit(function(e) {
+    $('#editVehicleForm').submit(function (e) {
       e.preventDefault();
       const id = $('#editVehicleId').val();
       const vehicle = {
-        name: $('#editVehicleName').val(),
-        brand: $('#editVehicleBrand').val(),
-        status: $('#editVehicleStatus').val()
+        registrationNumber: $('#editVehicleRegistration').val(),
+        mark: $('#editVehicleMark').val(),
+        modele: $('#editVehicleModel').val(),
+        annee: $('#editVehicleYear').val(),
+        rentalPrice: $('#editVehiclePrice').val()
       };
+      // $.ajax({ ... })
       $.ajax({
         url: API_BASE + '/' + id,
         type: 'PUT',
         data: vehicle,
-        success: function() {
+        headers: {
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('tokens')).accessToken
+        },
+        success: function () {
           $('#editVehicleModal').modal('hide');
           loadVehicles();
         }
@@ -205,20 +288,26 @@
     });
 
     // Supprimer un véhicule
-    window.deleteVehicle = function(id) {
+    window.deleteVehicle = function (id) {
       if (confirm('Supprimer ce véhicule ?')) {
         $.ajax({
           url: API_BASE + '/' + id,
           type: 'DELETE',
-          success: function() { loadVehicles(); }
+          headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('tokens')).accessToken
+          },
+          success: function () {
+            loadVehicles();
+          }
         });
       }
     }
 
     // Initialisation
-    $(document).ready(function() {
+    $(document).ready(function () {
       loadVehicles();
     });
   </script>
 </body>
+
 </html>
