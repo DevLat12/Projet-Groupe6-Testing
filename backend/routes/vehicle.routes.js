@@ -70,13 +70,14 @@ router.get('/', controller.getAllVehicles);
  *         description: Forbidden - Invalid token
  */
 router.post('/', authenticateToken, controller.createVehicle);
-
 /**
  * @swagger
  * /vehicles/{id}:
  *   put:
  *     summary: Update a vehicle by ID
  *     tags: [Vehicle]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -102,9 +103,16 @@ router.post('/', authenticateToken, controller.createVehicle);
  *                 type: string
  *     responses:
  *       200:
- *         description: Updated
+ *         description: Updated successfully
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       403:
+ *         description: Forbidden - Invalid token
+ *       404:
+ *         description: Vehicle not found
  */
-router.put('/:id', controller.updateVehicleById);
+
+router.put('/:id', authenticateToken, controller.updateVehicleById);
 
 
 /**

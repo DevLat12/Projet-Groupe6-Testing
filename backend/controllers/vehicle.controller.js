@@ -9,7 +9,7 @@ exports.getAllVehicles = async (req, res) => {
 exports.createVehicle = async (req, res) => {
     try {
         const vehicle = await Vehicle.create(req.body);
-        res.status(201).json(vehicle);
+        res.status(201).json({message:"Véhicule crée avec succès", vehicule: vehicle});
     } catch (error) {
         res.status(400).json({error: error.message});
     }
@@ -29,7 +29,6 @@ exports.deleteVehicle = async (req, res) => {
     const deleted = await Vehicle.destroy({where: {id: req.params.id}});
     if (!deleted) return res.status(404).json({message: "Non trouvé"});
     res.json({message: "Supprimé avec succès"});
-
 }
 
 exports.updateVehicleById = async (req, res) => {

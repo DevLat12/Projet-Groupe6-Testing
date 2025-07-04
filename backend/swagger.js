@@ -1,6 +1,6 @@
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const getLocalIPAddress = require('./utils/getLocalIp');
+const getLocalIPAddress = require('./utils/getLocalIP');
 
 
 const ip = getLocalIPAddress();
