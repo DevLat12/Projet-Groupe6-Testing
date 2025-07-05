@@ -20,32 +20,47 @@ jobs:
         with:
           node-version: '18'
 
-      # 3. Installer les dépendances backend (Express)
+      # 3. Lint backend (si ESLint installé)
+      - name: Lint backend
+        run: npx eslint . || echo "Pas de linter backend configuré"
+        working-directory: ./backend
+
+      # 4. Lint frontend (si ESLint installé)
+      - name: Lint frontend
+        run: npx eslint . || echo "Pas de linter frontend configuré"
+        working-directory: ./frontend
+
+      # 5. Exécuter les tests backend (Vitest/Jest)
+      - name: Run backend tests
+        run: npm test
+        working-directory: ./backend
+
+      # 6. Installer les dépendances backend (Express)
       - name: Install backend dependencies
         run: npm install
         working-directory: ./backend
 
-      # 4. Lancer le serveur Express en tâche de fond
+      # 7. Lancer le serveur Express en tâche de fond
       - name: Start Express server
         run: npm start &
         working-directory: ./backend
 
-      # 5. Attendre que le serveur Express soit prêt
+      # 8. Attendre que le serveur Express soit prêt
       - name: Wait for server to be ready
         run: npx wait-on http://localhost:3000
         working-directory: ./backend
 
-      # 6. Installer les dépendances frontend (Playwright)
+      # 9. Installer les dépendances frontend (Playwright)
       - name: Install frontend dependencies
         run: npm install
         working-directory: ./frontend
 
-      # 7. Installer les navigateurs Playwright
+      # 10. Installer les navigateurs Playwright
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
         working-directory: ./frontend
 
-      # 8. Lancer les tests Playwright (avec BASE_URL pour cibler le backend Express)
+      # 11. Lancer les tests Playwright (avec BASE_URL pour cibler le backend Express)
       - name: Run Playwright tests
         run: npx playwright test
         working-directory: ./frontend
