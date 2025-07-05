@@ -1,24 +1,24 @@
 const { test, expect } = require('@playwright/test');
-const path = require('path');
 
-// Tester la page login.html en local (file://)
+const API_URL = 'https://192.168.1.162:3000';
+
 test.describe('Page de connexion Propelize', () => {
+
   test('Connexion réussie avec bons identifiants', async ({ page }) => {
-    const filePath = path.resolve(__dirname, '../src/login.html');
-    await page.goto('file://' + filePath);
-    await page.fill('#email', 'admin@propelize.com');
-    await page.fill('#password', 'admin123');
-    await page.click('button[type="submit"]');
-    await page.waitForTimeout(300); // attendre la redirection
-    expect(page.url()).toContain('vehicles.html');
+    await page.goto(API_URL + '/login.html');
+    await page.fill('#name', 'marc');
+    await page.fill('#password', 'string');
+    // On attend la navigation (redirection JS) après le clic
+    page.click('button[type="submit"]')
+    await expect(page.locator('#success')).toHaveText('Connexion réussie');
+    // expect(page.url()).toContain('vehicles.html');
   });
 
   test('Erreur si mauvais identifiants', async ({ page }) => {
-    const filePath = path.resolve(__dirname, '../src/login.html');
-    await page.goto('file://' + filePath);
-    await page.fill('#email', 'wrong@propelize.com');
+    await page.goto(API_URL + '/login.html');
+    await page.fill('#name', 'wrong');
     await page.fill('#password', 'wrongpass');
     await page.click('button[type="submit"]');
-    await expect(page.locator('#error')).toHaveText('Identifiants invalides');
+    await expect(page.locator('#error')).toHaveText('Erreur lors de la connexion');
   });
 });

@@ -1,18 +1,18 @@
 const { test, expect } = require('@playwright/test');
-const path = require('path');
+const API_URL = 'https://192.168.1.162:3000';
 
 test.describe('Tableau de bord véhicules', () => {
   test('Affichage des véhicules après connexion', async ({ page }) => {
     // Aller à login, faire la connexion, vérifier la redirection et le contenu
-    const loginPath = path.resolve(__dirname, '../src/login.html');
-    await page.goto('file://' + loginPath);
-    await page.fill('#email', 'admin@propelize.com');
-    await page.fill('#password', 'admin123');
-    await page.click('button[type="submit"]');
-    await page.waitForTimeout(300);
-    expect(page.url()).toContain('vehicles.html');
-    // Vérifier la présence d'un véhicule
-    await expect(page.locator('table')).toContainText('Tesla Model S');
-    await expect(page.locator('table')).toContainText('Renault Zoe');
+    await page.goto(API_URL + '/login.html');
+    await page.fill('#name', 'marc');
+    await page.fill('#password', 'string');
+    await Promise.all([
+      page.waitForNavigation({ url: /vehicles\.html/ }),
+      page.click('button[type="submit"]')
+    ]);
+    // Vérifier la présence des véhicules dans le tableau
+    await expect(page.locator('#vehiclesTable tbody')).toContainText('FERCTYY');
+    await expect(page.locator('#vehiclesTable tbody')).toContainText('OPNIQ');
   });
 });
