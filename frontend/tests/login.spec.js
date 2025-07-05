@@ -8,8 +8,8 @@ test.describe('Page de connexion Propelize', () => {
     await page.goto(API_URL + '/login.html');
     await page.fill('#name', 'marc');
     await page.fill('#password', 'string');
-    // On attend la navigation (redirection JS) après le clic
-    page.click('button[type="submit"]')
+
+    await page.click('button[type="submit"]')
     await expect(page.locator('#success')).toHaveText('Connexion réussie');
     // expect(page.url()).toContain('vehicles.html');
   });

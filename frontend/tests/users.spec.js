@@ -4,10 +4,8 @@ const API_URL = 'https://192.168.1.162:3000';
 
 test.describe('Gestion des utilisateurs', () => {
   test('Ajout d\'un utilisateur et présence dans la liste', async ({ page }) => {
-    // Connexion
     await page.goto(API_URL + '/users.html');
 
-    // Attendre que la page soit bien chargée (optionnel : attendre la table)
     await page.waitForSelector('#usersTable');
 
     // Ouvrir le modal
