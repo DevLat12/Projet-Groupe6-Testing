@@ -65,8 +65,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/vehicles', vehicleRoutes);
 app.use('/auth', AuthRoutes);
 
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+// app.use(cors());
 
 // Connexion à la base
 sequelize.authenticate()

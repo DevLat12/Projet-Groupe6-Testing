@@ -135,4 +135,72 @@ router.post('/login', controller.login);
  */
 router.post('/refresh-token', controller.refreshToken);
 
+/**
+ * @swagger
+ * /auth/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of users retrieved successfully
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/users', controller.listUsers);
+
+/**
+ * @swagger
+ * /auth/{id}:
+ *   get:
+ *     summary: Get user by ID
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User found successfully
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ */
+router.get('/:id', controller.getUserById);
+
+/**
+ * @swagger
+ * /auth/{id}:
+ *   delete:
+ *     summary: Delete a user
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ */
+router.delete('/:id', controller.deleteUser);
+
+
+
 module.exports = router;

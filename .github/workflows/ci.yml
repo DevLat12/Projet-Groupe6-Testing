@@ -7,23 +7,47 @@ on:
     branches: [main]
 
 jobs:
-  test-frontend:
+  test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
+      # 1. Récupérer le code du dépôt
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # 2. Installer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Install dependencies
-        run: npm ci || npm install
+
+      # 3. Installer les dépendances backend (Express)
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: ./backend
+
+      # 4. Lancer le serveur Express en tâche de fond
+      - name: Start Express server
+        run: npm start &
+        working-directory: ./backend
+
+      # 5. Attendre que le serveur Express soit prêt
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3000
+        working-directory: ./backend
+
+      # 6. Installer les dépendances frontend (Playwright)
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: ./frontend
+
+      # 7. Installer les navigateurs Playwright
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Lint (optionnel)
-        run: echo "Pas de lint spécifique pour HTML statique"
+        working-directory: ./frontend
+
+      # 8. Lancer les tests Playwright (avec BASE_URL pour cibler le backend Express)
       - name: Run Playwright tests
-        run: npx playwright test tests/*.spec.js
+        run: npx playwright test
+        working-directory: ./frontend
+        env:
+          BASE_URL: http://localhost:3000

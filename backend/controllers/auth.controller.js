@@ -1,6 +1,7 @@
 const jwtConfig = require('../config/jwtConfig'); // Chemin vers votre config JWT
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const user = require("../models/user.model");
 
 const generateAccessToken = (user) => {
     const accessToken = jwt.sign({ id: user.id , name:user.name},
@@ -133,4 +134,21 @@ exports.refreshToken = async (req, res) => {
             tokens: newAccessToken,
         });
     });
+}
+
+exports.listUsers = async (req, res) => {
+    const users = await User.findAll();
+    res.json(users);
+}
+
+exports.getUserById = async (req, res) => {
+    const User = await user.findByPk(req.params.id);
+    if (!User) return res.status(404).json({message: "Non trouvé"});
+    res.json(User);
+};
+
+exports.deleteUser = async (req, res) => {
+    const deleted = await user.destroy({where: {id: req.params.id}});
+    if (!deleted) return res.status(404).json({message: "Non trouvé"});
+    res.json({message: "Supprimé avec succès"});
 }

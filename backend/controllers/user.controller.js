@@ -8,8 +8,8 @@ exports.getAllUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        const user = await user.create(req.body);
-        res.status(201).json({message:"Véhicule crée avec succès", user: user});
+        const User = await user.create(req.body);
+        res.status(201).json({message:"Véhicule crée avec succès", user: User});
     } catch (error) {
         res.status(400).json({error: error.message});
     }
