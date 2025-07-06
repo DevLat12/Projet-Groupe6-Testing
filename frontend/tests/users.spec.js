@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const API_URL = 'https://192.168.1.162:3000';
+const API_URL = 'https://localhost:3000';
 
 test.describe('Gestion des utilisateurs', () => {
   test('Ajout d\'un utilisateur et présence dans la liste', async ({ page }) => {

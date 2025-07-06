@@ -1,6 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
-const API_URL = 'https://192.168.1.162:3000';
+// Définir l'URL de base du backend (adapter le port/IP si besoin)
+const BASE_URL = 'https://localhost:3000';
 
 test.describe('Page de connexion Propelize', () => {
 
@@ -13,7 +14,7 @@ test.describe('Page de connexion Propelize', () => {
     test.beforeAll(async ({request}) => {
         
         // Créer un nouvel utilisateur
-        const response = await request.post(`${API_URL}/auth/register`, {
+        const response = await request.post(`${BASE_URL}/auth/register`, {
             data: {
                 name: data.name,
                 password: data.password
@@ -25,7 +26,7 @@ test.describe('Page de connexion Propelize', () => {
 
     test('Connexion réussie avec bons identifiants', async ({page}) => {
 
-        await page.goto(API_URL + '/login.html');
+        await page.goto(`${BASE_URL}/login.html`);
         await page.fill('#name', data.name);
         await page.fill('#password', data.password);
 
@@ -35,7 +36,7 @@ test.describe('Page de connexion Propelize', () => {
     });
 
     test('Erreur si mauvais identifiants', async ({page}) => {
-        await page.goto(API_URL + '/login.html');
+        await page.goto(`${BASE_URL}/login.html`);
         await page.fill('#name', 'wrong');
         await page.fill('#password', 'wrongpass');
         await page.click('button[type="submit"]');
