@@ -70,6 +70,7 @@ router.get('/', controller.getAllVehicles);
  *         description: Forbidden - Invalid token
  */
 router.post('/', authenticateToken, controller.createVehicle);
+
 /**
  * @swagger
  * /vehicles/{id}:
@@ -157,6 +158,7 @@ router.get('/search/:registrationNumber', controller.searchByRegistration);
  *         description: Forbidden - Invalid token
  */
 router.delete('/:id', authenticateToken,controller.deleteVehicle);
+
 /**
  * @swagger
  * /vehicles/price/{maxPrice}:

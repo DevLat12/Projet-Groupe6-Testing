@@ -1,8 +1,6 @@
 import request from 'supertest';
 import {describe, it, expect, beforeAll, beforeEach, afterAll} from 'vitest';
-import app from '../app';
-import sequelize from '../config/database';
-import User from '../models/user.model';
+import app from '../../app';
 
 let accessToken = null;
 let refreshToken = null;

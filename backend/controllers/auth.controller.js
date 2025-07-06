@@ -69,7 +69,7 @@ exports.updateUser = async (req, res) => {
             user: {
                 id: user.id,
                 name: user.name,
-            },  
+            },
         });
     } catch (error) {
         console.error('Erreur durant le processus:', error);

@@ -78,9 +78,9 @@ if (require.main === module) {
   const PORT = 3000;
 
   https.createServer({ key: ssl.key, cert: ssl.cert }, app)
-    .listen(PORT, ip, () => {
-      console.log(`🚀 Serveur HTTPS lancé : https://${ip}:${PORT}`);
-      console.log(`📘 Swagger UI dispo : https://${ip}:${PORT}/api-docs`);
+    .listen(PORT, "localhost", () => {
+      console.log(`🚀 Serveur HTTPS lancé : https://localhost:${PORT}`);
+      console.log(`📘 Swagger UI dispo : https://localhost:${PORT}/api-docs`);
     });
 }
 

@@ -12,7 +12,6 @@ services:
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-
   app:
     build: .
     container_name: node-app
@@ -27,6 +26,8 @@ services:
       DB_PASSWORD: root
       DB_NAME: propelize
     command: sh -c "npx sequelize-cli db:migrate && npm start"
+    env_file:
+      - .env
 
 volumes:
   mysql-data:
