@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach ,afterEach} from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import User from '../../models/user.model'; // correspond à `default`
 import {
   mockUsers,
@@ -6,7 +6,7 @@ import {
   clearDatabase,
 } from "../mock-utils";
 
-describe("UserRepository (mocked)", () => {
+describe("User (mocked)", () => {
   beforeEach(async () => {
     await clearDatabase();
     await seedUsers();
@@ -27,21 +27,21 @@ describe("UserRepository (mocked)", () => {
     });
 
     vi.spyOn(User, "create").mockImplementation(
-        async ({ name, password }) => {
-          const id = mockUsers.length + 1;
-          const user = { id, name, password };
-          mockUsers.push(user);
-          return user;
-        }
+      async ({ name, password }) => {
+        const id = mockUsers.length + 1;
+        const user = { id, name, password };
+        mockUsers.push(user);
+        return user;
+      }
     );
 
     vi.spyOn(User, "update").mockImplementation(
-        async (id, userData) => {
-          const user = mockUsers.find((u) => u.id === id);
-          if (!user) return false;
-          Object.assign(user, userData);
-          return true;
-        }
+      async (id, userData) => {
+        const user = mockUsers.find((u) => u.id === id);
+        if (!user) return false;
+        Object.assign(user, userData);
+        return true;
+      }
     );
   });
 
@@ -49,7 +49,7 @@ describe("UserRepository (mocked)", () => {
     vi.restoreAllMocks();
   });
 
-  it("should return user with valid name", async () => {
+  it("doit retourner un utilisateur avec un nom valide", async () => {
     const testName = "Admin";
     const user = await User.findOne(testName);
     expect(user).toBeDefined();
@@ -58,9 +58,9 @@ describe("UserRepository (mocked)", () => {
     expect(user).toHaveProperty("password");
   });
 
-  it("should create a new user", async () => {
+  it("doit créer un nouvel utilisateur", async () => {
     const userData = {
-      name: "New User",
+      name: "Nouvel utilisateur",
       password: "newpass123",
     };
     const user = await User.create(userData);
@@ -69,7 +69,7 @@ describe("UserRepository (mocked)", () => {
     expect(user).toHaveProperty("password");
   });
 
-  it("should update user name", async () => {
+  it("doit mettre à jour le nom d'un utilisateur", async () => {
     const user = await User.findOne("Admin");
     const newName = "SuperAdmin";
     const updated = await User.update(user.id, { name: newName });
@@ -80,7 +80,7 @@ describe("UserRepository (mocked)", () => {
     expect(updatedUser).toHaveProperty("password");
   });
 
-  it("should return all users", async () => {
+  it("doit retourner tous les utilisateurs", async () => {
     const users = await User.findAll();
     expect(users).toBeInstanceOf(Array);
     expect(users.length).toBeGreaterThan(0);
@@ -89,7 +89,7 @@ describe("UserRepository (mocked)", () => {
     expect(users[0]).toHaveProperty("password");
   });
 
-  it("should delete an existing user", async () => {
+  it("doit supprimer un utilisateur existant", async () => {
     const user = await User.findOne("Admin");
     const result = await User.destroy(user.id);
     expect(result).toBe(true);
@@ -98,7 +98,7 @@ describe("UserRepository (mocked)", () => {
     expect(deletedUser).toBeNull();
   });
 
-  it("should fail to delete a non-existing user", async () => {
+  it("doit échouer à supprimer un utilisateur inexistant", async () => {
     const result = await User.destroy(9999); // id qui n'existe pas
     expect(result).toBe(false);
   });
